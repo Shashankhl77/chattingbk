@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
-import User, { IUser } from "../models/user";
-import { Message } from "../models/message";
+import { IUser, UserModel } from "../models/user";
+import Message from "../models/message";
 
 interface OnlineUser {
   userId: string;
@@ -26,8 +26,8 @@ export const initSocket = (io: Server) => {
     socket.on("sendMessage", async ({ senderId, receiverId, text }) => {
       try {
         const receiver = onlineUsers.find((user) => user.userId === receiverId);
-        const sender = await User.findById(senderId);
-        const receiverUser = await User.findById(receiverId);
+        const sender = await UserModel.findById(senderId);
+        const receiverUser = await UserModel.findById(receiverId);
         if (!sender || !receiverUser) {
           throw new Error("Sender or receiver not found");
         }

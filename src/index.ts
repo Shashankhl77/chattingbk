@@ -4,15 +4,19 @@ import mongoose from "mongoose";
 import http from "http";
 import { Server } from "socket.io";
 import * as Socket from "./socket/socket";
-import cors from "cors";
 import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
+import path from "path";
+import { swaggerUi, swaggerSpec } from "./swagger";
 
 import "./models/message";
 import "./models/user";
 import "./models/accesstoken";
 import "./models/refreshtoken";
+import "./models/request";
+import "./passport/passport";
 import auth from "./router/auth";
+import request from "./router/message";
+
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
@@ -31,8 +35,15 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
     process.exit(1);
   });
+app.use(
+  "/v1/swagger",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, { explorer: true })
+);
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/v1/auth", auth);
+app.use("/v1/request", request);
 
 const io = new Server(server, {
   cors: {
