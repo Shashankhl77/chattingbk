@@ -69,3 +69,51 @@ export async function acceptRequest(
     res.status(500).json({ message: "Failed to send request", error });
   }
 }
+export async function contacts(req: Request, res: Response): Promise<void> {
+  try {
+    const { userId } = req.body;
+
+    const user = new Types.ObjectId(userId);
+    const status = await request.findOne({ sender: user });
+
+    if (!status) {
+      res.status(400).json({ message: "User id not found" });
+      return;
+    }
+    const data = await request.aggregate([
+      {
+        $match: {
+          sender: user,
+          status: "ACCEPTED",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "sender",
+          foreignField: "_id",
+          as: "senderDetails",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "receiver",
+          foreignField: "_id",
+          as: "receiverDetails",
+        },
+      },
+      {
+        $unwind: "$receiverDetails",
+      },
+    ]);
+    res.json({
+      status: 200,
+      message: "Request updated successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to send request", error });
+  }
+}
