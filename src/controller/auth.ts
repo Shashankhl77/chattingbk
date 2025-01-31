@@ -51,7 +51,6 @@ export async function signup(
 }
 export async function login(req: Request, res: Response): Promise<void> {
   try {
-    console.log("-------------", req.user);
     const { username, password } = req.body;
     const user = await UserModel.findOne({ username });
     if (!user) {
@@ -131,15 +130,12 @@ export async function logout(req: Request, res: Response): Promise<void> {
   }
 
   try {
-    // Find the refresh token in the database
     const tokenDoc = await RefreshToken.findOne({ token: refreshtoken });
 
     if (!tokenDoc) {
       res.status(403).json({ message: "Invalid or expired refresh token" });
       return;
     }
-
-    // Delete the refresh token from the database to invalidate it
     await RefreshToken.deleteOne({ token: refreshtoken });
 
     res.status(200).json({ message: "Logout successful" });

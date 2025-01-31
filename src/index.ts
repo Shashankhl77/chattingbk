@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/v1/auth", auth);
 app.use("/v1/request", request);
-
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -55,9 +54,11 @@ const io = new Server(server, {
 });
 
 Socket.initSocket(io);
-server.listen(PORT, () => {
-  console.info(`Server is running on port ${PORT}.`);
+
+server.listen(PORT, async () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
+
 process.on("SIGINT", function () {
   process.exit(0);
 });

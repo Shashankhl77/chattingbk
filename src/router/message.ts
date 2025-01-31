@@ -5,9 +5,17 @@ const router = express.Router();
 
 /**
  * @swagger
- * /request:
+ * tags:
+ *   - name: admin/request
+ *     description: Operations related to auth in admin
+ */
+/**
+ * @swagger
+ * /request/request:
  *   post:
  *     summary: request
+ *     tags:
+ *        -  admin/request
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -49,6 +57,7 @@ const router = express.Router();
  *               Success:
  *                 summary: Successful response
  *                 value:
+ *                      status: 200
  *                      message: "request sent successfully"
  */
 router.post(
@@ -61,6 +70,8 @@ router.post(
  * /request/respond:
  *   put:
  *     summary: respond
+ *     tags:
+ *        -  admin/request
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -108,7 +119,8 @@ router.post(
  *               Success:
  *                 summary: Successful response
  *                 value:
- *                      message: "request sent successfully"
+ *                      status: 200
+ *                      message: "Respond sent successfully"
  */
 router.put(
   "/respond",
@@ -121,6 +133,8 @@ router.put(
  * /request/contact:
  *   post:
  *     summary: contact
+ *     tags:
+ *        -  admin/request
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -162,6 +176,7 @@ router.put(
  *               Success:
  *                 summary: Successful response
  *                 value:
+ *                    status: 200
  *                    message: successfully
  *                    data:
  *                    - _id: 679a0afa2dedc811b12f60e0

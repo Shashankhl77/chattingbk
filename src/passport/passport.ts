@@ -14,8 +14,6 @@ export interface tokenInterface {
 }
 passport.use(
   new BearerStrategy.Strategy(function (token, done) {
-    console.log("aaaaaaaaa");
-
     Token.findByToken(
       token,
       function (err: Error | null, tokenFromDb: mongoResp) {

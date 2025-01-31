@@ -5,9 +5,18 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   - name: admin/auth
+ *     description: Operations related to auth in admin
+ */
+
+/**
+ * @swagger
  * /auth/signup:
  *   post:
  *     summary: signUp
+ *     tags:
+ *        -  admin/auth
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -72,6 +81,8 @@ router.post("/signup", auth.signup);
  * /auth/login:
  *   post:
  *     summary: login
+ *     tags:
+ *        -  admin/auth
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -132,6 +143,8 @@ router.post("/login", auth.login);
  * /auth/accesstoken:
  *   post:
  *     summary: Generated new access token
+ *     tags:
+ *        -  admin/auth
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:
@@ -181,6 +194,8 @@ router.post("/accesstoken", auth.refresh);
  * /auth/logout:
  *   post:
  *     summary: logout
+ *     tags:
+ *        -  admin/auth
  *     security:
  *       - adminBearerAuth: []
  *     requestBody:

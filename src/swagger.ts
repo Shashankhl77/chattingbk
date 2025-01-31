@@ -21,7 +21,7 @@ const options: swaggerJSDoc.Options = {
         adminBearerAuth: {
           type: "http",
           scheme: "bearer",
-          bearerFormat: "JWT", // Optional, can specify JWT or other types of tokens
+          bearerFormat: "JWT",
           description: "Specify the user token",
         },
       },
@@ -32,10 +32,7 @@ const options: swaggerJSDoc.Options = {
       },
     ],
   },
-  apis: [
-    "./src/router/**/*.ts", // Routes folder
-    "./src/models/*.ts", // Models of db
-  ],
+  apis: ["./src/router/**/*.ts", "./src/models/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
